@@ -1,0 +1,13 @@
+.hv:hover{
+    color: blueviolet!important;
+}
+
+.form_search{
+    background-color: #18142F !important ;
+    color: white!important;
+}
+
+a{
+    text-decoration: none!important;
+    color: white!important;
+}
