@@ -9,12 +9,12 @@ import { Link } from 'react-router-dom';
 
 function Header() {
   return (
-    <Container>
+    <Container className='mb-4'>
       <Navbar expand="lg" >
         <Container fluid>
           <Link to="/">
             <img
-              src="img/logo.png"
+              src="logo.png"
               width="170px"
               height="autopx"
               className="d-inline-block align-top"

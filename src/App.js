@@ -1,13 +1,16 @@
 import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { CreateMedia } from './components/media/createMedia';
-import Body from './components/body';
+import { CreateMedia } from './components/pages/media/createMedia';
+import Body from './components/pages/body';
 import Header from "./components/header";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Dashboard from "./components/dashboard"
+import Dashboard from "./components/pages/dashboard"
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import { AdminRecurses } from './components/pages/adminRecurses';
+import { Page404 } from './components/pages/page404';
+import { EditMedia } from './components/pages/media/editMedia';
 
 
 function App() {
@@ -27,7 +30,10 @@ function App() {
           <Routes>
             <Route path='/' element={<Body />} />
             <Route path='/dashboard' element={<Dashboard />} />
-            <Route path='edit' element={<CreateMedia />} />
+            <Route path='/dashboard/createMedia' element={<CreateMedia />} />
+            <Route path='/dashboard/adminRecurses' element={<AdminRecurses />} />
+            <Route path='/dashboard/editar/:id' element={<EditMedia />} />
+            <Route path='*' element={<Page404 />} />
           </Routes>
         </Router>
       </ThemeProvider>

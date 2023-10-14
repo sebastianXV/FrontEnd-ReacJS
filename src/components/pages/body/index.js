@@ -1,5 +1,5 @@
 import { Card, Col, Container, Row } from "react-bootstrap"
-import { listarMedia } from "../../api/media"
+import { listarMedia } from "../../../api/media"
 import { useEffect, useState } from "react"
 import "./body.css"
 
@@ -23,7 +23,7 @@ const Body = () => {
 
 
     return (<Container>
-        <Row xs={3} md={5} className="g-4">
+        <div className="movies">
             {peliculas.map((peliculas, idx) => (
                 <Col key={peliculas._id}>
                     <Card border="dark">
@@ -32,7 +32,7 @@ const Body = () => {
                     <Card.Title className="tittle">{peliculas.titulo}</Card.Title>
                 </Col>
             ))}
-        </Row>
+        </div>
 
     </Container>
     )

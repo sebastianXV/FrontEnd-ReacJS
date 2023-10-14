@@ -1,59 +1,55 @@
-import { Card, Container, Button, Col, Form, Row } from "react-bootstrap"; // Importa los componentes de react-bootstrap
-import "./edit.css";
-import { useEffect, useState } from "react"; // Importa useEffect y useState de React
-import { listarGeneros } from "../../api/genero"
-import { listarDirectores } from "../../api/director";
-import { listarProductoras } from "../../api/productora"
-import { postMedia } from "../../api/media";
+import { Card, Container, Button, Col, Form, Row } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { getMediaByID, updateByID } from '../../../api/media';
+import { listarGeneros } from "../../../api/genero";
+import { listarDirectores } from "../../../api/director";
+import { listarProductoras } from "../../../api/productora";
+import { listarTipos } from "../../../api/tipo";
 
 
-export const CreateMedia = () => {
+export const EditMedia = () => {
 
-    const [form, setForm] = useState({
-        serial: "abcd1244",
-        titulo: "",
-        sinopsis: "",
-        imagenPortada: "",
-        urlPelicula: "https:/elviaje.com",
-        anioEstreno: "",
-        generoPrincipal: "",
-        directorPrincipal: "",
-        productora: "",
-        tipo: ""
-
-    });
-
+    const { id } = useParams();
+    const [mediaData, setMediaData] = useState([]);
     const [generos, setGeneros] = useState([])
     const [directores, setDirectores] = useState([]);
     const [productoras, setProductoras] = useState([]);
+    const [tipos, setTipos] = useState([]);
+
 
     useEffect(() => {
         async function fetchData() {
             try {
                 const generosData = await listarGeneros();
+                const mediaData = await getMediaByID(id);
                 const directoresData = await listarDirectores();
                 const productorasData = await listarProductoras();
+                const tiposData = await listarTipos();
 
                 setGeneros(generosData);
                 setDirectores(directoresData);
                 setProductoras(productorasData);
+                setTipos(tiposData);
+                setMediaData(mediaData);
             } catch (error) {
                 console.error('Error al obtener datos:', error);
             }
         }
+
         fetchData();
     }, []);
 
+
+
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(form)
-
         try {
-            console.log('Enviando solicitud POST para crear película:', form);
-            const peliculaCreada = await postMedia(form);
-            console.log('Película creada con éxito:', peliculaCreada);
+            const mediaUpdate = await updateByID(mediaData, id);
+            alert("actualizada correctamente")
+            setMediaData(mediaUpdate);
         } catch (error) {
-            console.error('Error al crear la película:', error);
+            console.error('Error en la peticion:', error);
         }
     };
 
@@ -73,18 +69,20 @@ export const CreateMedia = () => {
                                 <Form.Label>Título</Form.Label>
                                 <Form.Control
                                     type="text"
+                                    requiered
                                     placeholder="El título"
-                                    value={form.titulo}
+                                    value={mediaData && mediaData.titulo}
                                     onChange={(e) => {
-                                        setForm({ ...form, titulo: e.target.value });
+                                        setMediaData({ ...mediaData, titulo: e.target.value });
                                     }}
                                 />
                             </Form.Group>
                             <Form.Group as={Col} controlId="formGridState">
                                 <Form.Label>Género</Form.Label>
                                 <Form.Select
-                                    value={form.generoPrincipal}
-                                    onChange={(e) => setForm({ ...form, generoPrincipal: e.target.value })}
+                                    required
+                                    value={mediaData && mediaData.generoPrincipal}
+                                    onChange={(e) => setMediaData({ ...mediaData, generoPrincipal: e.target.value })}
                                 >
                                     <option key="default" value="">
                                         Elegir...
@@ -96,19 +94,32 @@ export const CreateMedia = () => {
                                     ))}
                                 </Form.Select>
                             </Form.Group>
+                            <Form.Group as={Col}>
+                                <Form.Label>Serial</Form.Label>
+                                <Form.Control
+                                    required
+                                    type="text"
+                                    value={mediaData && mediaData.serial}
+                                    placeholder="AAABBB123"
+                                    onChange={(e) => {
+                                        setMediaData({ ...mediaData, serial: e.target.value });
+                                    }}
+                                />
+                            </Form.Group>
                         </Row>
 
                         <Row className="mb-3">
                             <Form.Group as={Col}>
                                 <Form.Label>Sinopsis</Form.Label>
                                 <Form.Control
+                                    requiered
                                     as="textarea"
                                     aria-label="Con área de texto"
                                     type="text"
-                                    value={form.sinopsis}
+                                    value={mediaData && mediaData.sinopsis}
                                     placeholder="Resumen corto de la película"
                                     onChange={(e) => {
-                                        setForm({ ...form, sinopsis: e.target.value });
+                                        setMediaData({ ...mediaData, sinopsis: e.target.value });
                                     }}
                                 />
                             </Form.Group>
@@ -116,13 +127,14 @@ export const CreateMedia = () => {
 
                         <Row className="mb-1">
                             <Form.Group as={Col}>
-                                <Form.Label> </Form.Label>
+                                <Form.Label>Portada</Form.Label>
                                 <Form.Control
+                                    required
                                     type="url"
-                                    value={form.imagenPortada}
+                                    value={mediaData && mediaData.imagenPortada}
                                     placeholder="URL"
                                     onChange={(e) => {
-                                        setForm({ ...form, imagenPortada: e.target.value });
+                                        setMediaData({ ...mediaData, imagenPortada: e.target.value });
                                     }}
                                 />
                             </Form.Group>
@@ -130,8 +142,9 @@ export const CreateMedia = () => {
                             <Form.Group as={Col}>
                                 <Form.Label>Director</Form.Label>
                                 <Form.Select
-                                    value={form.directorPrincipal}
-                                    onChange={(e) => setForm({ ...form, directorPrincipal: e.target.value })}
+                                    required
+                                    value={mediaData && mediaData.directorPrincipal}
+                                    onChange={(e) => setMediaData({ ...mediaData, directorPrincipal: e.target.value })}
                                 >
                                     <option key="default" value="">
                                         Elegir...
@@ -148,8 +161,9 @@ export const CreateMedia = () => {
                             <Form.Group as={Col}>
                                 <Form.Label>Productora</Form.Label>
                                 <Form.Select
-                                    value={form.productora}
-                                    onChange={(e) => setForm({ ...form, productora: e.target.value })}
+                                    required
+                                    value={mediaData && mediaData.productora}
+                                    onChange={(e) => setMediaData({ ...mediaData, productora: e.target.value })}
                                 >
                                     <option key="default" value="">
                                         Elegir...
@@ -167,10 +181,14 @@ export const CreateMedia = () => {
                             <Form.Group as={Col} controlId="formGridState">
                                 <Form.Label>Tipo de Media</Form.Label>
                                 <Form.Select defaultValue="Película"
-                                    value={form.tipo}
-                                    onChange={(e) => setForm({ ...form, tipo: e.target.value })}>
-                                    <option>Película</option>
-                                    <option>Serie</option>
+                                    required
+                                    value={mediaData && mediaData.tipo}
+                                    onChange={(e) => setMediaData({ ...mediaData, tipo: e.target.value })}>
+                                    {tipos.map((tipo) => (
+                                        <option key={tipo._id} value={tipo._id}>
+                                            {tipo.nombre}
+                                        </option>
+                                    ))}
                                 </Form.Select>
                             </Form.Group>
                         </Row>
@@ -179,20 +197,18 @@ export const CreateMedia = () => {
                             <Form.Group as={Col}>
                                 <Form.Label>Año de estreno</Form.Label>
                                 <Form.Control
+                                    required
                                     type="number"
-                                    value={form.anioEstreno}
+                                    value={mediaData && mediaData.anioEstreno}
                                     placeholder="2023"
                                     onChange={(e) => {
-                                        setForm({ ...form, anioEstreno: e.target.value });
+                                        setMediaData({ ...mediaData, anioEstreno: e.target.value });
                                     }}
                                 />
                             </Form.Group>
                         </Row>
 
                         <Row>
-                            <Form.Group className="mb-3" id="formGridCheckbox">
-                                <Form.Check type="checkbox" label="Marcar" />
-                            </Form.Group>
                             <Button variant="primary" type="submit">
                                 Enviar
                             </Button>
@@ -201,19 +217,24 @@ export const CreateMedia = () => {
                 </Col >
 
                 <Col xs={12} md={6} className="mb-5">
-                    <Card className="custom-card">
-                        <Card.Img variant="top" src={form.imagenPortada} />
+                    <Card className="custom-card" bg="dark" text="white">
+                        <Card.Img variant="top" src={mediaData && mediaData.imagenPortada} alt="portada" />
                         <Card.Body>
-                            <Card.Title>{form.titulo}</Card.Title>
-                            <Card.Text>{form.sinopsis}</Card.Text>
+                            <Card.Title className="text-center">{mediaData && mediaData.titulo}</Card.Title>
                         </Card.Body>
-                        <Card.Footer>{}
-                            <small className="text-muted">{form.anioEstreno}</small>
+                        <Card.Footer text="white" className="text-center">
+                            <small>{mediaData && mediaData.anioEstreno}</small>
                         </Card.Footer>
                     </Card>
+
+
                 </Col>
             </Row >
 
         </Container >
     );
 };
+
+
+
+

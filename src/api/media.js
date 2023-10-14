@@ -1,5 +1,36 @@
 import { axiosConfiguration } from '../configuration/axios';
 
+export const postMedia = async (mediaData) => {
+  try {
+    const response = await axiosConfiguration.post('media', mediaData);
+
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error('Error al crear el recurso, status: ' + response.status);
+    }
+  } catch (error) {
+    console.error('Error al crear el recurso. error:', error);
+    throw error;
+  }
+};
+
+export const getMediaByID = async (id) => {
+  try {
+    const response = await axiosConfiguration.get(`media/${id}`);
+
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error('Error al obtener el recurso, status: ' + response.status);
+    }
+  } catch (error) {
+    console.error('Error al obtener el recurso, error:', error);
+    throw error;
+  }
+};
+
+
 export const listarMedia = async () => {
   try {
     const response = await axiosConfiguration.get('media');
@@ -7,27 +38,43 @@ export const listarMedia = async () => {
     if (response.status === 200) {
       return response.data;
     } else {
-      throw new Error('Error al obtener las peliculas');
+      throw new Error('Error al obtener los recursos, status' + response.status);
     }
   } catch (error) {
-    console.error('Error al obtener las peliculas y series:', error);
+    console.error('Error al obtener los recursos, error:', error);
+    throw error;
+  }
+};
+
+export const updateByID = async (mediaData, id) => {
+  try {
+    const response = await axiosConfiguration.put(`media/${id}`, mediaData);
+
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error('Error al actualizar el recurso: ' + response.status);
+    }
+  } catch (error) {
+    console.error('Error al actualizar el recurso:', error);
     throw error;
   }
 };
 
 
-export const postMedia = async (mediaData) => {
+export const deleteMedia = async (id) => {
   try {
-    const response = await axiosConfiguration.post('media', mediaData);
+    const response = await axiosConfiguration.delete(`media/${id}`);
 
     if (response.status === 200) {
-      return response.data; // Retorna los datos de la película creada
+      return response.data;
     } else {
-      throw new Error('Error al crear la película. Código de estado: ' + response.status);
+      throw new Error('Error al eliminar el recurso. ' + response.status);
     }
   } catch (error) {
-    console.error('Error al crear la película:', error);
-    throw error; // Lanza el error nuevamente para que se maneje en el componente que llama a esta función
+    console.error('Error al eliminar el recurso:', error);
+    throw error;
   }
 };
+
 

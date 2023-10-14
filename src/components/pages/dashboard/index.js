@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';  // Importa Link desde react-router-dom
+import { Link, useNavigate } from 'react-router-dom';  
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
@@ -7,7 +7,10 @@ import Button from 'react-bootstrap/Button';
 import { Container } from 'react-bootstrap';
 
 const Dashboard = () => {
+
+
     return (
+
         <Container>
             <Row xs={1} md={2} className="g-4">
                 <Col>
@@ -73,16 +76,18 @@ const Dashboard = () => {
                                 longer.
                             </Card.Text>
                         </Card.Body>
-                        <div className="d-grid gap-2">
-                            <Link to="/edit">
+                        <div className="">
+                            <Link to="/dashboard/createMedia">
                                 <Button variant="primary" size="lg">
                                     Crear
                                 </Button>
                             </Link>
 
-                            <Button variant="primary" size="lg">
-                                Administrar
-                            </Button>
+                            <Link to="/dashboard/adminRecurses">  {/* Cambio en esta línea */}
+                                <Button variant="primary" size="lg">
+                                    Administrar
+                                </Button>
+                            </Link>
                         </div>
                     </Card>
                 </Col>
