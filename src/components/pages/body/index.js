@@ -1,4 +1,4 @@
-import { Card, Col, Container, Row } from "react-bootstrap"
+import { Card, Container} from "react-bootstrap"
 import { listarMedia } from "../../../api/media"
 import { useEffect, useState } from "react"
 import "./body.css"
@@ -25,12 +25,9 @@ const Body = () => {
     return (<Container>
         <div className="movies">
             {peliculas.map((peliculas, idx) => (
-                <Col key={peliculas._id}>
-                    <Card border="dark">
-                        <Card.Img variant="top" src={peliculas.imagenPortada} />
-                    </Card>
-                    <Card.Title className="tittle">{peliculas.titulo}</Card.Title>
-                </Col>
+                <Card className="custom-card" bg="dark" text="white">
+                    <Card.Img variant="top" src={peliculas && peliculas.imagenPortada} alt="portada" />
+                </Card>
             ))}
         </div>
 

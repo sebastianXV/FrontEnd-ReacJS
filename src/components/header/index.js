@@ -14,7 +14,7 @@ function Header() {
         <Container fluid>
           <Link to="/">
             <img
-              src="logo.png"
+              src="img/logo.png"
               width="170px"
               height="autopx"
               className="d-inline-block align-top"

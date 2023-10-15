@@ -68,7 +68,7 @@ export const AdminRecurses = () => {
                                     </Typography>
                                 </Grid>
                                 <Grid item>
-                                    <Button variant="danger" onClick={() => handleDelete(medias._id)}>
+                                    <Button className="mx-1" variant="danger" onClick={() => handleDelete(medias._id)}>
                                         Eliminar
                                     </Button>
                                     <Button variant="primary" onClick={() => navigate(`/dashboard/editar/${medias._id}`)}>

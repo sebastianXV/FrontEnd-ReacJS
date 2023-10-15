@@ -38,7 +38,7 @@ export const EditMedia = () => {
         }
 
         fetchData();
-    }, []);
+    }, [id]);
 
 
 
