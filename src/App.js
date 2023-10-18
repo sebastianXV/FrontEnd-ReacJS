@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { CreateMedia } from './components/pages/media/createMedia';
+import { CreateGeneros} from './components/pages/generos/createGeneros'
 import Body from './components/pages/body';
 import Header from "./components/header";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -35,6 +36,7 @@ function App() {
               <Route path='/dashboard/createMedia' element={<CreateMedia />} />
               <Route path='/dashboard/adminRecurses' element={<AdminRecurses />} />
               <Route path='/dashboard/editar/:id' element={<EditMedia />} />
+              <Route path='/dashboard/createGeneros' element={<CreateGeneros />} />
               <Route path='*' element={<Page404 />} />
             </Routes>
           </Container>

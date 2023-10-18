@@ -44,7 +44,7 @@ const Dashboard = () => {
                         <Card.Title className='text-center' >Géneros</Card.Title>
                     </Card.Body>
                     <div className='text-center mb-2' >
-                        <Link to="/dashboard/createMedia">
+                        <Link to="/dashboard/createGeneros">
                             <Button variant="primary" size="md" style={{ marginRight: "10px" }}>
                                 Crear
                             </Button>

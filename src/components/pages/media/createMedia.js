@@ -24,6 +24,21 @@ export const CreateMedia = () => {
 
     });
 
+    const resetForm = () => {
+        setForm({
+          serial: "",
+          titulo: "",
+          sinopsis: "",
+          imagenPortada: "",
+          urlPelicula: "",
+          anioEstreno: "",
+          generoPrincipal: "",
+          directorPrincipal: "",
+          productora: "",
+          tipo: ""
+        });
+      };
+
     const [generos, setGeneros] = useState([])
     const [directores, setDirectores] = useState([]);
     const [productoras, setProductoras] = useState([]);
@@ -52,8 +67,9 @@ export const CreateMedia = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const peliculaCreada = await postMedia(form);
-            console.log('Película creada con éxito:', peliculaCreada);
+            const response = await postMedia(form);
+            console.log('Película creada con éxito:', response);
+            resetForm()
         } catch (error) {
             console.error('Error al crear la película:', error);
         }
@@ -214,20 +230,15 @@ export const CreateMedia = () => {
                             </Form.Group>
                         </Row>
 
-                        <Row>
-                            <Form.Group className="mb-3" id="formGridCheckbox">
-                                <Form.Check type="checkbox" label="Marcar" />
-                            </Form.Group>
-                            <Button variant="primary" type="submit">
-                                Enviar
-                            </Button>
-                        </Row>
+                        <Button variant="primary" type="submit">
+                            Enviar
+                        </Button>
                     </Form>
                 </Col >
 
                 <Col xs={12} md={6} className="mb-5">
                     <Card className="custom-card">
-                        <Card.Img variant="top" src={form.imagenPortada} alt="portada"/>
+                        <Card.Img variant="top" src={form.imagenPortada} alt="portada" />
                         <Card.Body>
                             <Card.Title className="align-center">{form.titulo}</Card.Title>
                         </Card.Body>
