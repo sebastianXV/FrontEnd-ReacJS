@@ -1,13 +1,23 @@
 .hv:hover{
     color: blueviolet!important;
 }
-
-.form_search{
-    background-color: #18142F !important ;
-    color: white!important;
+.custom-header{
+    background-color: rgb(20, 20, 20);
 }
 
+.custom-button{
+    background-color: blueviolet!important;
+    border: none;
+}
 a{
-    text-decoration: none!important;
+    text-decoration: none;
+    color: white;
+}
+
+
+
+.form_search{
+    background-color: #4f4545f6 !important ;
     color: white!important;
+    border: none;
 }

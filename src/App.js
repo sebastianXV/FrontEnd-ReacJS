@@ -11,6 +11,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { AdminRecurses } from './components/pages/adminRecurses';
 import { Page404 } from './components/pages/page404';
 import { EditMedia } from './components/pages/media/editMedia';
+import { Container } from 'react-bootstrap';
 
 
 function App() {
@@ -27,14 +28,16 @@ function App() {
         <CssBaseline />
         <Router>
           <Header />
-          <Routes>
-            <Route path='/' element={<Body />} />
-            <Route path='/dashboard' element={<Dashboard />} />
-            <Route path='/dashboard/createMedia' element={<CreateMedia />} />
-            <Route path='/dashboard/adminRecurses' element={<AdminRecurses />} />
-            <Route path='/dashboard/editar/:id' element={<EditMedia />} />
-            <Route path='*' element={<Page404 />} />
-          </Routes>
+          <Container className='mt-3'>
+            <Routes>
+              <Route path='/' element={<Body />} />
+              <Route path='/dashboard' element={<Dashboard />} />
+              <Route path='/dashboard/createMedia' element={<CreateMedia />} />
+              <Route path='/dashboard/adminRecurses' element={<AdminRecurses />} />
+              <Route path='/dashboard/editar/:id' element={<EditMedia />} />
+              <Route path='*' element={<Page404 />} />
+            </Routes>
+          </Container>
         </Router>
       </ThemeProvider>
     </>
